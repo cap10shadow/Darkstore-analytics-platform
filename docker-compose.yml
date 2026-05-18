@@ -1,0 +1,192 @@
+version: '3.8'
+
+services:
+  # API Gateway - Main entry point
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATA_SERVICE_URL=http://data-service:8001
+      - FORECASTER_SERVICE_URL=http://forecaster-service:8002
+      - ROUTE_OPTIMIZER_SERVICE_URL=http://route-optimizer-service:8003
+      - ANOMALY_DETECTOR_SERVICE_URL=http://anomaly-detector-service:8004
+      - AFFINITY_ANALYZER_SERVICE_URL=http://affinity-analyzer-service:8005
+      - EVENT_SIMULATOR_SERVICE_URL=http://event-simulator-service:8006
+    depends_on:
+      - data-service
+      - forecaster-service
+      - route-optimizer-service
+      - anomaly-detector-service
+      - affinity-analyzer-service
+      - event-simulator-service
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Data Service - Central data access
+  data-service:
+    build:
+      context: ./services/data-service
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - DB_PATH=/app/data/dark_store.db
+    volumes:
+      - ./data:/app/data:ro
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Forecaster Service - Demand forecasting
+  forecaster-service:
+    build:
+      context: ./services/forecaster-service
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    environment:
+      - DB_PATH=/app/data/dark_store.db
+    volumes:
+      - ./data:/app/data:ro
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Route Optimizer Service
+  route-optimizer-service:
+    build:
+      context: ./services/route-optimizer-service
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8003"
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Anomaly Detector Service
+  anomaly-detector-service:
+    build:
+      context: ./services/anomaly-detector-service
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8004"
+    environment:
+      - DB_PATH=/app/data/dark_store.db
+    volumes:
+      - ./data:/app/data:ro
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8004/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Affinity Analyzer Service
+  affinity-analyzer-service:
+    build:
+      context: ./services/affinity-analyzer-service
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"
+    environment:
+      - DB_PATH=/app/data/dark_store.db
+    volumes:
+      - ./data:/app/data:ro
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8005/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Event Simulator Service
+  event-simulator-service:
+    build:
+      context: ./services/event-simulator-service
+      dockerfile: Dockerfile
+    ports:
+      - "8006:8006"
+    environment:
+      - DB_PATH=/app/data/dark_store.db
+    volumes:
+      - ./data:/app/data:ro
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8006/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MCP Server for Claude
+  mcp-server:
+    build:
+      context: ./mcp-server
+      dockerfile: Dockerfile
+    ports:
+      - "8010:8010"
+    environment:
+      - GATEWAY_URL=http://api-gateway:8000
+    depends_on:
+      - api-gateway
+    networks:
+      - darkstore-network
+
+  # AI Chatbot
+  chatbot:
+    build:
+      context: ./chatbot
+      dockerfile: Dockerfile
+    ports:
+      - "8020:8020"
+    environment:
+      - GATEWAY_URL=http://api-gateway:8000
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    depends_on:
+      - api-gateway
+    networks:
+      - darkstore-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8020/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Dashboard - React frontend
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+      - chatbot
+    networks:
+      - darkstore-network
+
+networks:
+  darkstore-network:
+    driver: bridge
