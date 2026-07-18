@@ -152,7 +152,7 @@ make clean          Remove __pycache__ and .pyc files
 
 ## Known Issues / Roadmap
 
-- Docker DB path: services resolve the SQLite path via `Path(__file__).parent×4`; this works locally but resolves incorrectly inside Docker containers. Workaround: set `DB_PATH` env var per service.
+
 - No authentication / authorization layer.
 - SQLite is single-file; replace with PostgreSQL for multi-instance deployments.
 - No unit or integration tests.
