@@ -14,7 +14,7 @@ darkstore-analytics-platform/
 │   ├── anomaly-detector-service/ (Port 8004) — Isolation Forest + Z-score detection
 │   ├── affinity-analyzer-service/ (Port 8005) — co-purchase analysis
 │   └── event-simulator-service/ (Port 8006) — scenario simulation
-├── chatbot/                  (Port 8020) — LangChain + Gemini AI assistant
+├── chatbot/                  (Port 8020) — LangGraph + Gemini AI assistant
 ├── mcp-server/               (Port 8010) — FastMCP server for Claude integration
 ├── dashboard/                (Port 3000) — React + TypeScript frontend
 ├── shared/                   — shared Pydantic models
@@ -145,10 +145,10 @@ make clean          Remove __pycache__ and .pyc files
 
 ## Data Model
 
-**SKUs**: 150 products (SKU01000–SKU01149) across multiple categories
-**Orders**: 1,900 orders with full lifecycle events
-**Shelf locations**: `<AISLE><BAY>-<SHELF>` format (e.g., `A05-3`); 26 aisles × 20 bays × 5 shelves
-**Alerts**: severity levels Critical / High / Medium / Low
+- **SKUs**: 150 products (SKU01000–SKU01149) across multiple categories
+- **Orders**: 1,900 orders with full lifecycle events
+- **Shelf locations**: `<AISLE><BAY>-<SHELF>` format (e.g., `A05-3`); 26 aisles × 20 bays × 5 shelves
+- **Alerts**: severity levels Critical / High / Medium / Low
 
 The bundled dataset is synthetic and intentionally small — it is sized to demonstrate the analytics pipeline, not to benchmark performance at scale.
 
