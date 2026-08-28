@@ -19,7 +19,7 @@ darkstore-analytics-platform/
 ├── dashboard/                (Port 3000) — React + TypeScript frontend
 ├── shared/                   — shared Pydantic models
 └── data/
-    └── dark_store.db         — SQLite database (150 SKUs, 1 000 orders)
+    └── dark_store.db         — SQLite database (150 SKUs, 1,000 orders)
 ```
 
 ## Tech Stack
@@ -28,7 +28,7 @@ darkstore-analytics-platform/
 |---|---|
 | Backend services | FastAPI, Uvicorn, Pydantic v2 |
 | Data / ML | Pandas, NumPy, scikit-learn, statsmodels, SciPy |
-| AI / LLM | LangChain, LangGraph, Google Gemini 2.0 Flash |
+| AI / LLM | LangChain, Google Gemini 2.0 Flash |
 | MCP | FastMCP |
 | Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, Recharts |
 | Database | SQLite (dev) |
@@ -94,19 +94,19 @@ Central entry point. Routes requests to downstream microservices and provides an
 Loads SQLite into Pandas DataFrames on startup. Provides KPIs, orders (with pagination), inventory, low-stock analysis, alerts, and staff performance.
 
 ### Forecaster Service
-Six built-in forecasting models (ARIMA, SARIMA, Holt-Winters, Random Forest, Gradient Boosting) plus ensemble and auto-selection by MAPE.
+Five built-in forecasting models — ARIMA, SARIMA, Holt-Winters, Random Forest, and Gradient Boosting — plus an ensemble and automatic model selection by lowest MAPE.
 
 ### Route Optimizer Service
-Nearest-Neighbor + 2-opt local search for warehouse picking routes. Typically achieves 30–45 % distance reduction.
+Nearest-Neighbor construction followed by 2-opt local search for warehouse picking routes. Typically achieves a 30–45% reduction in route distance against the nearest-neighbor starting tour on the bundled dataset.
 
 ### Anomaly Detector Service
 Isolation Forest for order anomalies, Z-score analysis for inventory and staff metrics.
 
 ### Affinity Analyzer Service
-Market-basket analysis (support, confidence, lift) with co-location recommendations.
+Market-basket analysis computing support, confidence, and lift for co-purchased SKUs, with shelf co-location recommendations derived from the strongest associations.
 
 ### Event Simulator Service
-Generates synthetic event streams for Normal, Flash Sale, and Supply Delay scenarios.
+Generates synthetic event streams for Normal, Flash Sale, and Supply Delay scenarios, used to exercise the analytics pipeline end to end under different demand patterns.
 
 ### AI Chatbot (Port 8020)
 LangChain ReAct agent backed by Google Gemini 2.0 Flash. Eight tools covering all analytics capabilities. Conversation history kept per session.
@@ -145,13 +145,14 @@ make clean          Remove __pycache__ and .pyc files
 
 ## Data Model
 
-**SKUs**: 150 products (SKU01000–SKU01149) across multiple categories  
-**Orders**: 1 000 orders with full lifecycle events  
-**Shelf locations**: `<AISLE><BAY>-<SHELF>` format (e.g., `A05-3`); 26 aisles × 20 bays × 5 shelves  
-**Alerts**: severity levels Critical / High / Medium / Low  
+**SKUs**: 150 products (SKU01000–SKU01149) across multiple categories
+**Orders**: 1,000 orders with full lifecycle events
+**Shelf locations**: `<AISLE><BAY>-<SHELF>` format (e.g., `A05-3`); 26 aisles × 20 bays × 5 shelves
+**Alerts**: severity levels Critical / High / Medium / Low
+
+The bundled dataset is synthetic and intentionally small — it is sized to demonstrate the analytics pipeline, not to benchmark performance at scale.
 
 ## Known Issues / Roadmap
-
 
 - No authentication / authorization layer.
 - SQLite is single-file; replace with PostgreSQL for multi-instance deployments.
