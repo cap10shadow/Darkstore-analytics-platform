@@ -44,7 +44,7 @@ export default function OverviewPage() {
   const fmt = (n: number) => n.toLocaleString()
   const fmtCurrency = (n: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
-  const fmtPct = (n: number) => `${(n * 100).toFixed(1)}%`
+  const fmtPct = (n: number) => `${n.toFixed(1)}%`
 
   return (
     <div>
