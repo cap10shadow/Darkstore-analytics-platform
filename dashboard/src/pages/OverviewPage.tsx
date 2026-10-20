@@ -48,7 +48,7 @@ export default function OverviewPage() {
 
   return (
     <div>
-      <PageHeader title="Overview" description="Real-time darkstore operations dashboard" />
+      <PageHeader title="Overview" description="Operations overview for the generated dataset" />
 
       {/* KPI Cards */}
       {kpis && (
