@@ -12,9 +12,6 @@ class ForecastMode(str, Enum):
     HOLT_WINTERS = "holt_winters"
     RF = "rf"
     GBM = "gbm"
-    XGBOOST = "xgboost"
-    LIGHTGBM = "lightgbm"
-    PROPHET = "prophet"
 
 
 class ForecastRequest(BaseModel):
