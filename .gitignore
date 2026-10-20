@@ -52,7 +52,7 @@ dashboard/.env.local
 * (2).*
 * (2)
 
-# Agent tooling
+# Local tool settings
 .agent/
 
 # Logs
@@ -75,7 +75,7 @@ Thumbs.db
 .pids/
 *.pid
 
-# Claude Code (IDE settings and runtime files)
+# Local tool settings
 .claude/
 
 # Dashboard

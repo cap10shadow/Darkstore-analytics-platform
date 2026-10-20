@@ -4,7 +4,7 @@ export
 
 .PHONY: help install dev-install run-all stop-all run-gateway run-data run-forecaster \
         run-route run-anomaly run-affinity run-simulator run-mcp run-chatbot \
-        run-dashboard launch docker-build docker-up docker-down docker-logs test clean
+        run-dashboard launch docker-build docker-up docker-down docker-logs health-check clean
 
 # Default target
 help:
@@ -36,7 +36,7 @@ help:
 	@echo "  make docker-logs    - View Docker logs"
 	@echo ""
 	@echo "Other:"
-	@echo "  make test           - Run tests"
+	@echo "  make health-check   - Call /health and /health/all on the gateway (not a test suite)"
 	@echo "  make clean          - Clean up temporary files"
 
 # Install dependencies for all services
@@ -179,8 +179,8 @@ docker-down:
 docker-logs:
 	docker-compose logs -f
 
-# Test endpoints
-test:
+# Health-check the gateway and, through it, every service
+health-check:
 	@echo "Testing API Gateway health..."
 	curl -s http://localhost:8000/health | python -m json.tool
 	@echo ""

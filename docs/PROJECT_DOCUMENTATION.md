@@ -243,21 +243,21 @@ Expected output:
 curl http://localhost:8000/api/v1/data/kpis
 ```
 
-Expected output:
+Expected output (the "today" values and `backlog` are 0 because they are relative to the current date and the data is from 30 Oct to 5 Nov 2025; `active_alerts` counts alerts with status Open, out of 185 in total):
 ```json
 {
-  "total_orders_today": 146,
-  "total_orders_all": 1000,
+  "total_orders_today": 0,
+  "total_orders_all": 1900,
   "on_time_rate": 69.5,
-  "backlog": 204,
-  "avg_fulfillment_minutes": 17.7,
-  "total_revenue": 82156.72,
-  "revenue_today": 11879.83,
-  "low_stock_count": 20,
+  "backlog": 0,
+  "avg_fulfillment_minutes": 26.2,
+  "total_revenue": 1150299.65,
+  "revenue_today": 0.0,
+  "low_stock_count": 95,
   "total_skus": 150,
-  "stock_health_rate": 86.7,
+  "stock_health_rate": 36.7,
   "active_alerts": 119,
-  "critical_alerts": 67
+  "critical_alerts": 53
 }
 ```
 
@@ -319,10 +319,10 @@ curl -X POST http://localhost:8020/api/v1/chat \
   -d '{"message": "What is our on-time delivery rate and how many items need restocking?", "session_id": "demo"}'
 ```
 
-Example response:
+Example response (the wording varies from run to run):
 ```json
 {
-  "response": "The current on-time rate is 69.5%. There are 20 items that need restocking, with the most critical being Fresho Fresh Bananas (0 in stock) and Farm Fresh Fresh Tomatoes (0 in stock).",
+  "response": "The current on-time rate is 69.5%. 95 items are below their reorder threshold; several, such as Farm Fresh Fresh Potatoes and Fresho Fresh Bananas, are out of stock.",
   "session_id": "demo"
 }
 ```
@@ -562,10 +562,10 @@ darkstore-analytics-platform/
 |--------|-------|
 | Total SKUs | 150 |
 | Total Orders | 1,900 |
-| Average Fulfillment Time | 17.7 minutes |
+| Average Fulfillment Time | 26.2 minutes |
 | On-Time Rate | 69.5% |
-| Low Stock Items | 20 |
-| Active Alerts | 119 |
+| Low Stock Items | 95 |
+| Active (Open) Alerts | 119 of 185 total |
 
 ---
 
