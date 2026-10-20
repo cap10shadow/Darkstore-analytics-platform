@@ -116,7 +116,28 @@ Generates synthetic event streams for Normal, Flash Sale, and Supply Delay scena
 ReAct agent built with LangGraph (`langgraph.prebuilt.create_react_agent`) backed by Google Gemini 2.0 Flash. Eight tools covering all analytics capabilities. Conversation history kept per session.
 
 ### MCP Server (Port 8010)
-FastMCP server exposing 12 tools and 3 resources for direct Claude AI integration.
+FastMCP server exposing 12 tools and 3 resources for direct Claude AI integration. It calls the API gateway, so the gateway (and the services behind it) must be running. The transport is chosen with `MCP_TRANSPORT`:
+
+| Mode | Set by | Use it for |
+|---|---|---|
+| `stdio` (default) | nothing | Claude Desktop, which launches `python mcp-server/main.py` as a subprocess and talks over stdin/stdout. Running it by hand in a terminal just waits for input. |
+| `http` | `MCP_TRANSPORT=http` (set in the Dockerfile and `docker-compose.yml`) | A long-running server for Docker or remote MCP clients, at `http://localhost:8010/mcp`. Host and port come from `MCP_HOST` (default `0.0.0.0`) and `MCP_PORT` (default `8010`). |
+
+Claude Desktop config (stdio):
+
+```json
+{
+  "mcpServers": {
+    "darkstore": {
+      "command": "python",
+      "args": ["/absolute/path/to/mcp-server/main.py"],
+      "env": { "GATEWAY_URL": "http://localhost:8000" }
+    }
+  }
+}
+```
+
+To run the HTTP mode locally: `MCP_TRANSPORT=http python mcp-server/main.py` (PowerShell: `$env:MCP_TRANSPORT="http"; python mcp-server/main.py`).
 
 ### Dashboard (Port 3000)
 React SPA with eight pages: Overview, Orders, Inventory, Forecast, Routes, Anomalies, Affinity, Simulation. Includes an AI chat panel.
