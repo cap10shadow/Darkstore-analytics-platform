@@ -44,11 +44,11 @@ export default function OverviewPage() {
   const fmt = (n: number) => n.toLocaleString()
   const fmtCurrency = (n: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
-  const fmtPct = (n: number) => `${(n * 100).toFixed(1)}%`
+  const fmtPct = (n: number) => `${n.toFixed(1)}%`
 
   return (
     <div>
-      <PageHeader title="Overview" description="Real-time darkstore operations dashboard" />
+      <PageHeader title="Overview" description="Operations overview for the generated dataset" />
 
       {/* KPI Cards */}
       {kpis && (

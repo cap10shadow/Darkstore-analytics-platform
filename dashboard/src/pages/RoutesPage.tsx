@@ -45,7 +45,7 @@ export default function RoutesPage() {
 
   return (
     <div>
-      <PageHeader title="Route Optimization" description="Optimize warehouse picking routes using TSP algorithms" />
+      <PageHeader title="Route Optimization" description="Order picks along a shorter route (nearest-neighbour + 2-opt)" />
 
       {/* Controls */}
       <Card className="mb-6">

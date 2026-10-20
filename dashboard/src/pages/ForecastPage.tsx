@@ -45,7 +45,7 @@ export default function ForecastPage() {
 
   return (
     <div>
-      <PageHeader title="Demand Forecasting" description="Predict future demand per SKU using ML models" />
+      <PageHeader title="Demand Forecasting" description="Forecast demand per SKU with statistical and ML models" />
 
       {/* Controls */}
       <Card className="mb-6">

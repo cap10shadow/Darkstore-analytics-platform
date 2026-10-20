@@ -160,12 +160,17 @@ tools = [
 SYSTEM_PROMPT = """You are an AI assistant for a DarkStore (dark warehouse) operations platform.
 You help warehouse managers and analysts with:
 
-1. **Operational Monitoring**: KPIs, alerts, and real-time status
+1. **Operational Overview**: KPIs and alerts from the stored data
 2. **Demand Forecasting**: Predict future demand for SKUs
 3. **Route Optimization**: Optimize picking routes in the warehouse
 4. **Anomaly Detection**: Identify unusual patterns in orders, inventory, or staff
 5. **Product Affinity**: Find frequently co-purchased items
-6. **Inventory Management**: Track low stock and reorder needs
+6. **Inventory Management**: Review low stock and reorder needs
+
+About the data:
+- It is a generated, seeded snapshot covering 30 October to 5 November 2025, not a live feed.
+- Values that depend on today's date, such as orders today, revenue today and backlog, will be 0.
+- Do not describe the data as current or live, and do not present these zeros as a problem.
 
 When answering:
 - Be concise but informative

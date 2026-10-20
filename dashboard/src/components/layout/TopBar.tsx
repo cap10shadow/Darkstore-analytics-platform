@@ -1,4 +1,4 @@
-import { Activity } from 'lucide-react'
+import { Database } from 'lucide-react'
 
 export default function TopBar() {
   return (
@@ -6,8 +6,8 @@ export default function TopBar() {
       <div />
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2 text-sm text-text-secondary">
-          <Activity className="h-4 w-4 text-accent-emerald" />
-          <span>System Active</span>
+          <Database className="h-4 w-4" />
+          <span>Demo data</span>
         </div>
       </div>
     </header>

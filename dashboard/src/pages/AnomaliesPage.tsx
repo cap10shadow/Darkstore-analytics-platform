@@ -211,7 +211,7 @@ export default function AnomaliesPage() {
                       </div>
                       <div>
                         <span className="text-text-secondary">Delay Rate</span>
-                        <p className="text-accent-rose font-medium">{(a.delay_rate * 100).toFixed(1)}%</p>
+                        <p className="text-accent-rose font-medium">{a.delay_rate.toFixed(1)}%</p>
                       </div>
                     </div>
                   </Card>
