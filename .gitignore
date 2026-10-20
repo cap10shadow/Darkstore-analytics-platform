@@ -37,10 +37,23 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+coverage/
 
 # Environment
 .env
+.env.*
+*.env
+!.env.example
+!**/.env.example
 .env.local
+dashboard/.env.local
+
+# Duplicate files created by copy/paste
+* (2).*
+* (2)
+
+# Agent tooling
+.agent/
 
 # Logs
 *.log
@@ -68,3 +81,4 @@ Thumbs.db
 # Dashboard
 dashboard/node_modules/
 dashboard/dist/
+*.tsbuildinfo
