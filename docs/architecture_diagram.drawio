@@ -81,7 +81,7 @@
         <mxCell id="simulator_svc" value="&lt;b&gt;Event Simulator&lt;/b&gt;&lt;br&gt;:8006&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Normal · Flash Sale&lt;br&gt;Supply Delay scenarios&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="420" y="400" width="170" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="ai_svc" value="&lt;b&gt;AI Integration&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;LangChain ReACT Agent&lt;br&gt;MCP Server (12 tools)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="ai_svc" value="&lt;b&gt;AI Integration&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;LangGraph ReAct Agent&lt;br&gt;MCP Server (12 tools)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="630" y="400" width="160" height="70" as="geometry" />
         </mxCell>
 
