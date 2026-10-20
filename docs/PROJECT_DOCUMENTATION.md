@@ -509,7 +509,8 @@ darkstore-analytics-platform/
 ├── docker-compose.yml
 ├── requirements.txt
 ├── Makefile
-└── PROJECT_DOCUMENTATION.md
+└── docs/
+    └── PROJECT_DOCUMENTATION.md
 ```
 
 ---
@@ -560,7 +561,7 @@ darkstore-analytics-platform/
 | Metric | Value |
 |--------|-------|
 | Total SKUs | 150 |
-| Total Orders | 1,000 |
+| Total Orders | 1,900 |
 | Average Fulfillment Time | 17.7 minutes |
 | On-Time Rate | 69.5% |
 | Low Stock Items | 20 |

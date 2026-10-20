@@ -2,6 +2,10 @@
 
 A microservices-based analytics platform for dark store (dark warehouse) operations. Provides AI-powered demand forecasting, route optimization, anomaly detection, product affinity analysis, and an intelligent chatbot interface.
 
+![System architecture](docs/architecture_diagram.png)
+
+The editable source is [docs/architecture_diagram.drawio](docs/architecture_diagram.drawio). Longer write-up: [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md).
+
 ## Architecture
 
 ```
