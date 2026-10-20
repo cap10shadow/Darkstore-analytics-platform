@@ -37,10 +37,23 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+coverage/
 
 # Environment
 .env
+.env.*
+*.env
+!.env.example
+!**/.env.example
 .env.local
+dashboard/.env.local
+
+# Duplicate files created by copy/paste
+* (2).*
+* (2)
+
+# Local tool settings
+.agent/
 
 # Logs
 *.log
@@ -62,9 +75,10 @@ Thumbs.db
 .pids/
 *.pid
 
-# Claude Code (IDE settings and runtime files)
+# Local tool settings
 .claude/
 
 # Dashboard
 dashboard/node_modules/
 dashboard/dist/
+*.tsbuildinfo

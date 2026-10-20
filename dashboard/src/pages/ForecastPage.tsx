@@ -12,7 +12,7 @@ import ModelComparisonBar from '../components/charts/ModelComparisonBar'
 import type { ForecastRequest } from '../types/forecast'
 import type { CompareRequest } from '../types/forecast'
 
-const MODELS = ['auto', 'ensemble', 'arima', 'sarima', 'holt_winters', 'rf', 'gbm', 'xgboost', 'lightgbm', 'prophet']
+const MODELS = ['auto', 'ensemble', 'arima', 'sarima', 'holt_winters', 'rf', 'gbm']
 
 export default function ForecastPage() {
   const { data: invData, loading: invLoading } = useApi(() => fetchInventory(1000))

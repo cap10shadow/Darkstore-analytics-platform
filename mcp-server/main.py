@@ -41,7 +41,7 @@ async def forecast_demand(sku_id: str, forecast_days: int = 14, mode: str = "aut
     """Forecast demand for a specific SKU.
 
     Args:
-        sku_id: The SKU identifier (e.g., 'SKU-0001')
+        sku_id: The SKU identifier (e.g., 'SKU01000'; valid range SKU01000-SKU01149)
         forecast_days: Number of days to forecast (1-90)
         mode: Forecasting mode - 'auto' selects best model, 'ensemble' uses all models
     """
@@ -57,8 +57,8 @@ async def compare_forecast_models(sku_id: str, forecast_days: int = 14) -> dict:
     """Compare all available forecasting models for a SKU.
 
     Args:
-        sku_id: The SKU identifier
-        forecast_days: Number of days to forecast
+        sku_id: The SKU identifier (e.g., 'SKU01000'; valid range SKU01000-SKU01149)
+        forecast_days: Number of days to forecast (1-90)
     """
     return await api_call("POST", "/api/v1/forecast/compare", json_data={
         "sku_id": sku_id,
@@ -136,7 +136,7 @@ async def get_product_affinities(top_n: int = 20, min_lift: float = 1.0) -> dict
 
     Args:
         top_n: Number of top pairs to return (1-100)
-        min_lift: Minimum lift threshold (higher = stronger association)
+        min_lift: Minimum lift threshold (0.5-5.0; higher = stronger association)
     """
     return await api_call("GET", "/api/v1/affinity/pairs", params={
         "top_n": top_n,
@@ -267,4 +267,18 @@ def warehouse_config() -> str:
 
 
 if __name__ == "__main__":
-    mcp.run(show_banner=False, log_level="ERROR")
+    # stdio (default): launched as a subprocess by Claude Desktop.
+    # http: long-running server for Docker / remote MCP clients, at http://<host>:<port>/mcp
+    transport = os.getenv("MCP_TRANSPORT", "stdio").lower()
+    if transport == "stdio":
+        mcp.run(show_banner=False, log_level="ERROR")
+    elif transport == "http":
+        mcp.run(
+            transport="http",
+            host=os.getenv("MCP_HOST", "0.0.0.0"),
+            port=int(os.getenv("MCP_PORT", "8010")),
+            show_banner=False,
+            log_level="ERROR",
+        )
+    else:
+        raise SystemExit(f"Unsupported MCP_TRANSPORT '{transport}' (use 'stdio' or 'http')")

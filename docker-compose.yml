@@ -149,6 +149,9 @@ services:
       - "8010:8010"
     environment:
       - GATEWAY_URL=http://api-gateway:8000
+      - MCP_TRANSPORT=http
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8010
     depends_on:
       - api-gateway
     networks:
@@ -163,7 +166,8 @@ services:
       - "8020:8020"
     environment:
       - GATEWAY_URL=http://api-gateway:8000
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.5-flash}
     depends_on:
       - api-gateway
     networks:

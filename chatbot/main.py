@@ -15,6 +15,7 @@ from langgraph.prebuilt import create_react_agent
 # Configuration
 GATEWAY_URL = os.getenv("GATEWAY_URL", "http://localhost:8000")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
 
 app = FastAPI(
     title="DarkStore AI Chatbot",
@@ -183,7 +184,7 @@ def create_agent():
         return None
 
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+        model=GEMINI_MODEL,
         temperature=0,
         google_api_key=GOOGLE_API_KEY
     )
@@ -224,6 +225,8 @@ async def health_check():
     return {
         "status": "healthy",
         "service": "chatbot",
+        "api_key_configured": bool(GOOGLE_API_KEY),
+        "model": GEMINI_MODEL,
         "agent_ready": agent_graph is not None
     }
 
