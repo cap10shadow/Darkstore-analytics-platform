@@ -100,7 +100,7 @@ The DarkStore Analytics Platform provides:
 | **Database** | SQLite (development) |
 | **Data Processing** | Pandas, NumPy |
 | **ML/Forecasting** | scikit-learn, statsmodels |
-| **Chatbot** | LangChain + LangGraph + Google Gemini 2.0 Flash |
+| **Chatbot** | LangChain + LangGraph + Google Gemini (default `gemini-3.5-flash`, set with `GEMINI_MODEL`) |
 | **MCP Server** | FastMCP |
 | **HTTP Client** | httpx (async) |
 | **Validation** | Pydantic |

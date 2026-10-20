@@ -18,7 +18,7 @@ darkstore-analytics-platform/
 │   ├── anomaly-detector-service/ (Port 8004) — Isolation Forest + Z-score detection
 │   ├── affinity-analyzer-service/ (Port 8005) — co-purchase analysis
 │   └── event-simulator-service/ (Port 8006) — scenario simulation
-├── chatbot/                  (Port 8020) — LangGraph + Gemini AI assistant
+├── chatbot/                  (Port 8020) — LangGraph + Gemini AI assistant (model set by GEMINI_MODEL)
 ├── mcp-server/               (Port 8010) — FastMCP server for Claude integration
 ├── dashboard/                (Port 3000) — React + TypeScript frontend
 ├── shared/                   — shared Pydantic models
@@ -32,7 +32,7 @@ darkstore-analytics-platform/
 |---|---|
 | Backend services | FastAPI, Uvicorn, Pydantic v2 |
 | Data / ML | Pandas, NumPy, scikit-learn, statsmodels, SciPy |
-| AI / LLM | LangGraph, LangChain, Google Gemini 2.0 Flash |
+| AI / LLM | LangGraph, LangChain, Google Gemini (default `gemini-3.5-flash`, set with `GEMINI_MODEL`) |
 | MCP | FastMCP |
 | Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, Recharts |
 | Database | SQLite (dev) |
@@ -86,6 +86,7 @@ Copy `.env.example` to `.env` and fill in the values:
 | Variable | Required | Description |
 |---|---|---|
 | `GOOGLE_API_KEY` | Yes (chatbot) | Google Gemini API key |
+| `GEMINI_MODEL` | No | Gemini model for the chatbot (default `gemini-3.5-flash`) |
 | `DATA_SERVICE_URL` | No | Override data service URL |
 | `FORECASTER_SERVICE_URL` | No | Override forecaster URL |
 
@@ -113,7 +114,7 @@ Market-basket analysis computing support, confidence, and lift for co-purchased 
 Generates synthetic event streams for Normal, Flash Sale, and Supply Delay scenarios. It runs standalone — the generated streams are not currently consumed by the other services, and no throughput or latency measurement is performed.
 
 ### AI Chatbot (Port 8020)
-ReAct agent built with LangGraph (`langgraph.prebuilt.create_react_agent`) backed by Google Gemini 2.0 Flash. Eight tools covering all analytics capabilities. Conversation history kept per session.
+ReAct agent built with LangGraph (`langgraph.prebuilt.create_react_agent`) backed by Google Gemini. The model defaults to `gemini-3.5-flash` and can be changed with the `GEMINI_MODEL` environment variable. Eight tools covering all analytics capabilities. Conversation history kept per session. `GET /health` reports `api_key_configured` and the active `model`.
 
 ### MCP Server (Port 8010)
 FastMCP server exposing 12 tools and 3 resources for direct Claude AI integration. It calls the API gateway, so the gateway (and the services behind it) must be running. The transport is chosen with `MCP_TRANSPORT`:
